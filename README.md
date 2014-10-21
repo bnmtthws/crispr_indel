@@ -3,13 +3,26 @@
 
 companion to paper detailing the generation of stable germ-line mutants in the mosquito *Aedes aegypti*
 
-ipython notebook detailing the procedure to map sequencing reads to a small 'genome' and analyzing these alignments for insertions and deletions
+ben matthews 10/2014<br>
+bmatthews@rockefeller.edu<br>
+[http://github.com/bnmtthws/crispr_indel/](github)
 
+---
 software requirements and *tested versions*:<br>
-  • gmap/gsnap [http://research-pub.gene.com/gmap/] *version 09-26-2014*<br>
-  • pysam [https://github.com/pysam-developers/pysam] *version 0.8.0*<br>
-  • samtools/htslib [http://www.htslib.org] *version 1.1*<br>
-  
+1. gmap/gsnap [http://research-pub.gene.com/gmap/] *version 10-09-2014*<br>
+2. pysam [https://github.com/pysam-developers/pysam] *version 0.8.0*<br>
+3. samtools/htslib [http://www.htslib.org] *version 1.1*<br>
+
 python package requirements:<br>
-  • pysamstats [https://github.com/alimanfoo/pysamstats] *version 0.16*<br>
-  
+1. pysamstats [https://github.com/alimanfoo/pysamstats] *version 0.16*<br>
+2. seaborn [http://web.stanford.edu/~mwaskom/software/seaborn/] *version 0.4.0*<br>
+
+---
+output:
+1. sorted .bam files for each sample
+2. .variant.stats file summarizing indel/SNP rates for each sample
+3. coming soon: figure output
+
+input:
+1. directory of .fastq files with numbered samples denoted by *SX*.fastq (the default output from an Illumina MiSeq instrument)
+2. fasta file to serve as a 'genome' for the gapped alignments
