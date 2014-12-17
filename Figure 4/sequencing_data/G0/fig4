@@ -1,20 +1,13 @@
 {
  "metadata": {
   "name": "",
-  "signature": "sha256:94145c3cd448390b23e59f682e23226ca2c7ad43c85c0caaf2e5d47d1be63bb6"
+  "signature": "sha256:f2c8d48548274cec4f38ceebb9f028db12ec6bbd097a3f5a49ecbd71d84cecb7"
  },
  "nbformat": 3,
  "nbformat_minor": 0,
  "worksheets": [
   {
    "cells": [
-    {
-     "cell_type": "markdown",
-     "metadata": {},
-     "source": [
-      "#Figure 4"
-     ]
-    },
     {
      "cell_type": "markdown",
      "metadata": {},
@@ -26,25 +19,36 @@
      "cell_type": "markdown",
      "metadata": {},
      "source": [
-      "###Genome engineering with CRISPR/Cas9 in the mosquito <i>Aedes aegypti</i>\n",
-      "####Kistler KE, Vosshall LB, and Matthews BJ\n",
+      "script to align deep sequencing reads and detect indels caused by ZFN/TALEN/CRISPR<br>\n",
       "ben matthews 11/2014<br>\n",
       "bmatthews@rockefeller.edu<br>\n",
       "[http://github.com/bnmtthws/crispr_indel/](github)\n",
+      "\n",
+      "part 2 of 2: analysis\n",
       "\n",
       "---\n",
       "python package requirements:<br>\n",
       "1. numpy\n",
       "2. pandas\n",
       "3. seaborn\n",
-      "4. PyVCF (0.6.7)\n",
-      "\n",
-      "other software requirements:<br>\n",
-      "1. Picard (v1.126)\n",
-      "2. GATK (v.3.3.0)\n",
       "\n",
       "---\n",
-      "UPDATE INPUT/OUTPUT requirements"
+      "input:\n",
+      "1. *.variant.stats file summarizing indel/SNP rates for each sample (generated from previous notebook)\n",
+      "2. legend for genome.fa detailing predicted CRISPR site(s)\n",
+      "3. legend for samples indicating the predicted \n",
+      "\n",
+      "output:\n",
+      "1. plots detailing indel frequency across amplicons\n",
+      "2. data frame (that can be written to .csv file)"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "###G0 samples from LV-02-13\n",
+      "####5-6 individuals per sample"
      ]
     },
     {
@@ -55,19 +59,11 @@
       "import numpy as np\n",
       "import seaborn\n",
       "import matplotlib as mp\n",
-      "%matplotlib inline"
+      "%matplotlib qt"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 1
-    },
-    {
-     "cell_type": "markdown",
-     "metadata": {},
-     "source": [
-      "##Figure 3 - sgRNA tests for 6 genes"
-     ]
+     "outputs": []
     },
     {
      "cell_type": "heading",
@@ -81,13 +77,11 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "fig4d_prefix_dir = '6ppk3sgRNA/miseq-07022014/'\n",
-      "samples = pd.read_csv(fig4d_prefix_dir + 'legends/samples.csv')"
+      "samples = pd.read_csv('legends/samples.csv')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 20
+     "outputs": []
     },
     {
      "cell_type": "heading",
@@ -101,12 +95,11 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "injections = pd.read_csv(fig4d_prefix_dir + 'legends/injections.csv')"
+      "injections = pd.read_csv('legends/injections.csv')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 21
+     "outputs": []
     },
     {
      "cell_type": "heading",
@@ -122,14 +115,13 @@
      "input": [
       "overall = pd.DataFrame()\n",
       "for sample in samples.iloc[0:,0]:\n",
-      "    temp = pd.read_csv(fig4d_prefix_dir + sample + '.variant.stats',delimiter='\\t')\n",
+      "    temp = pd.read_csv(sample + '.variant.stats',delimiter='\\t')\n",
       "    temp['S_num'] = sample\n",
       "    overall = overall.append(temp)"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 22
+     "outputs": []
     },
     {
      "cell_type": "heading",
@@ -150,8 +142,7 @@
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 23
+     "outputs": []
     },
     {
      "cell_type": "markdown",
@@ -164,7 +155,17 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "final_6ppk_data = pd.DataFrame()\n",
+      "overall_filtered"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": []
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "final_data = pd.DataFrame()\n",
       "\n",
       "for inj in injections.iterrows():\n",
       "    overall_filtered[overall_filtered['name_y'].isin([inj[1]['name']])]\n",
@@ -173,29 +174,11 @@
       "    if inj[1]['strand'] == 'rev':\n",
       "        temp['sgRNA_pos'] = temp['sgRNA_pos'] * -1\n",
       "        \n",
-      "    final_6ppk_data = final_6ppk_data.append(temp)"
+      "    final_data = final_data.append(temp)"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [
-      {
-       "output_type": "stream",
-       "stream": "stderr",
-       "text": [
-        "-c:6: SettingWithCopyWarning: \n",
-        "A value is trying to be set on a copy of a slice from a DataFrame.\n",
-        "Try using .loc[row_indexer,col_indexer] = value instead\n",
-        "\n",
-        "See the the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy\n",
-        "-c:8: SettingWithCopyWarning: \n",
-        "A value is trying to be set on a copy of a slice from a DataFrame.\n",
-        "Try using .loc[row_indexer,col_indexer] = value instead\n",
-        "\n",
-        "See the the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy\n"
-       ]
-      }
-     ],
-     "prompt_number": 24
+     "outputs": []
     },
     {
      "cell_type": "markdown",
@@ -209,31 +192,29 @@
      "collapsed": false,
      "input": [
       "seaborn.set_style(\"ticks\")\n",
-      "ax_fig4d_raw = seaborn.factorplot('sgRNA_pos','indel_rate',col='name_y',col_wrap=6,hue='name_x',\n",
-      "                   ci=95,kind='point',data=final_6ppk_data,sharex=False,sharey=True)"
+      "ax = seaborn.factorplot('sgRNA_pos','indel_rate',col='name_y',hue='name_x',\n",
+      "                   ci=95,kind='point',data=final_data,sharex=False,sharey=True)"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 45
+     "outputs": []
     },
     {
      "cell_type": "markdown",
      "metadata": {},
      "source": [
-      "####write data to .csv file and figure to .pdf"
+      "####write data to .csv file"
      ]
     },
     {
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "final_6ppk_data.to_csv('ppk6_all.csv')"
+      "final_data.to_csv('wtrw_LV0213_g0.csv')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 46
+     "outputs": []
     },
     {
      "cell_type": "markdown",
@@ -246,23 +227,21 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "summary_data = final_6ppk_data.groupby(['name_y','S_num'],as_index=False)[['indel_rate']].max()"
+      "summary_data = final_data.groupby(['name_y','S_num'],as_index=False)[['indel_rate']].max()"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 47
+     "outputs": []
     },
     {
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "summary_data.to_csv('ppk6_summary.csv')"
+      "summary_data.to_csv('wtrw_LV0213_g0_summary.csv')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 48
+     "outputs": []
     },
     {
      "cell_type": "markdown",
@@ -275,45 +254,84 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "ax_fig4d = seaborn.factorplot(data=summary_data,x='name_y',y='indel_rate',kind='bar')\n",
-      "ax_fig4d.savefig(format='pdf',filename='fig4d_sgRNA_test_maxCut.pdf')"
+      "seaborn.factorplot(data=summary_data,x='name_y',y='indel_rate',kind='bar')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 49
+     "outputs": []
     },
     {
      "cell_type": "markdown",
      "metadata": {},
      "source": [
-      "##Figure 2C - sgRNA indel assay"
+      "####mean max cut rate for wtrw G0s"
      ]
     },
     {
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "s1only = final_6ppk_data[final_6ppk_data['injection'].isin(['LV28'])]\n",
-      "seaborn.set_style(\"ticks\")\n",
-      "ax_fig2c_raw = seaborn.factorplot('sgRNA_pos','indel_rate',col='chrom',col_wrap=3,hue='S_num',\n",
-      "                   ci=95,kind='point',data=s1only,sharex=False,sharey=True)"
+      "np.mean(summary_data[summary_data['name_y'] == 'wtrwG0']['indel_rate'])"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 29
+     "outputs": []
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "#### import data on HDR calculated from samtools, using commands of this format:\n",
+      "samtools view S6.sorted.bam | cut -f3 | sort | uniq -c; samtools view S6.sorted.bam | grep TAATAAGGATCCATAACCTAAGG | grep wtrw | wc -l"
+     ]
     },
     {
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "ax_fig2c_raw.savefig(format='pdf',filename='fig2c_LV28-testing-zoom.pdf')"
+      "hdr_data = pd.read_csv('wtrw_g0_hdr_counts.csv')"
      ],
      "language": "python",
      "metadata": {},
-     "outputs": [],
-     "prompt_number": 30
+     "outputs": []
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "hdr_data = hdr_data.merge(summary_data)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": []
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "boxplot + scatterplot of HDR rates for the 6 samples"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "mp.pyplot.boxplot(hdr_data['hdr_frac'])\n",
+      "mp.pyplot.plot([1,1,1,1,1,1],hdr_data['hdr_frac'],'r.')"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": []
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "hdr_data['hdr_frac'].mean()"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": []
     },
     {
      "cell_type": "code",
