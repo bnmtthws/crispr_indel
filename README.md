@@ -3,9 +3,10 @@
 
 companion to paper detailing the generation of stable germ-line mutants in the mosquito *Aedes aegypti*
 
-ben matthews 10/2014<br>
-bmatthews@rockefeller.edu<br>
+ben matthews 12/26/2014<br>
+Ben.Matthews@rockefeller.edu<br>
 [http://github.com/bnmtthws/crispr_indel/](github)
+The companion paper can be found on bioRxiv: [http://bioRxiv.org](Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*)
 
 ---
 software requirements and *tested versions*:<br>
@@ -21,7 +22,7 @@ python package requirements:<br>
 output:
 1. sorted .bam files for each sample
 2. .variant.stats file summarizing indel/SNP rates for each sample
-3. coming soon: figure output
+3. figure output for panels in Figures 2-4
 
 input:
 1. directory of .fastq files with numbered samples denoted by *SX*.fastq (the default output from an Illumina MiSeq instrument)
