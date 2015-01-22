@@ -6,9 +6,11 @@ companion to paper detailing the generation of stable germ-line mutants in the m
 ben matthews 12/26/2014<br>
 Ben.Matthews@rockefeller.edu<br>
 [http://github.com/bnmtthws/crispr_indel/](github)
-The companion paper can be found on bioRxiv: [http://bioRxiv.org](Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*)
+The companion paper can be found on bioRxiv: [http://biorxiv.org/content/early/2014/12/30/013276](Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*)
 
 ---
+I use [https://store.continuum.io/cshop/anaconda/](Anaconda) as a python distribution on both MacOS and RHEL Linux.
+
 software requirements and *tested versions*:<br>
 1. gmap/gsnap [http://research-pub.gene.com/gmap/] *version 10-09-2014*<br>
 2. pysam [https://github.com/pysam-developers/pysam] *version 0.8.0*<br>
@@ -27,3 +29,7 @@ output:
 input:
 1. directory of .fastq files with numbered samples denoted by *SX*.fastq (the default output from an Illumina MiSeq instrument)
 2. fasta file to serve as a 'genome' for the gapped alignments
+
+---
+Contained in this repository (as of Jan. 22, 2015): analysis notebooks associated with the [http://biorxiv.org/content/early/2014/12/30/013276](bioRxiv) pre-print<br>
+In progress: generic code for analysis of a single sequencing library
