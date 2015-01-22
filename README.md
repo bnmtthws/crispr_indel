@@ -4,9 +4,9 @@
 companion to paper detailing the generation of stable germ-line mutants in the mosquito *Aedes aegypti*
 
 ben matthews 12/26/2014<br>
-Ben.Matthews@rockefeller.edu<br>
+[Ben.Matthews@rockefeller.edu](mailto:Ben.Matthews@rockefeller.edu)<br>
 [github repository](http://github.com/bnmtthws/crispr_indel/)<br>
-The companion paper can be found on bioRxiv: [Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*](http://biorxiv.org/content/early/2014/12/30/013276)
+The companion pre-print can be found on bioRxiv: [Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*](http://biorxiv.org/content/early/2014/12/30/013276)
 
 ---
 I use [Anaconda](https://store.continuum.io/cshop/anaconda/) as a python distribution on both MacOS and RHEL Linux.
@@ -21,15 +21,15 @@ python package requirements:<br>
 2. seaborn [http://web.stanford.edu/~mwaskom/software/seaborn/] *version 0.4.0*<br>
 
 ---
-output:
+output:<br>
 1. sorted .bam files for each sample<br>
 2. .variant.stats file summarizing indel/SNP rates for each sample<br>
 3. figure output for panels in Figures 2-4<br>
 
-input:
+input:<br>
 1. directory of .fastq files with numbered samples denoted by *SX*.fastq (the default output from an Illumina MiSeq instrument)<br>
 2. fasta file to serve as a 'genome' for the gapped alignments<br>
 
 ---
-Contained in this repository (as of Jan. 22, 2015): analysis notebooks associated with the [bioRxiv](http://biorxiv.org/content/early/2014/12/30/013276) pre-print<br>
+Contained in this repository (as of Jan. 22, 2015): analysis notebooks associated with our [bioRxiv](http://biorxiv.org/content/early/2014/12/30/013276) pre-print<br>
 In progress: generic code for analysis of a single sequencing library<br>
