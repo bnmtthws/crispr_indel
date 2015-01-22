@@ -5,11 +5,11 @@ companion to paper detailing the generation of stable germ-line mutants in the m
 
 ben matthews 12/26/2014<br>
 Ben.Matthews@rockefeller.edu<br>
-[http://github.com/bnmtthws/crispr_indel/](github)
-The companion paper can be found on bioRxiv: [http://biorxiv.org/content/early/2014/12/30/013276](Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*)
+[github repository](http://github.com/bnmtthws/crispr_indel/)
+The companion paper can be found on bioRxiv: [Genome-engineering with CRISPR-Cas9 in the mosquito *Aedes aegypti*](http://biorxiv.org/content/early/2014/12/30/013276)
 
 ---
-I use [https://store.continuum.io/cshop/anaconda/](Anaconda) as a python distribution on both MacOS and RHEL Linux.
+I use [Anaconda](https://store.continuum.io/cshop/anaconda/) as a python distribution on both MacOS and RHEL Linux.
 
 software requirements and *tested versions*:<br>
 1. gmap/gsnap [http://research-pub.gene.com/gmap/] *version 10-09-2014*<br>
@@ -31,5 +31,5 @@ input:
 2. fasta file to serve as a 'genome' for the gapped alignments
 
 ---
-Contained in this repository (as of Jan. 22, 2015): analysis notebooks associated with the [http://biorxiv.org/content/early/2014/12/30/013276](bioRxiv) pre-print<br>
+Contained in this repository (as of Jan. 22, 2015): analysis notebooks associated with the [bioRxiv](http://biorxiv.org/content/early/2014/12/30/013276) pre-print<br>
 In progress: generic code for analysis of a single sequencing library
